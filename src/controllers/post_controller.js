@@ -36,7 +36,7 @@ export const getPost = (req, res) => {
 export const deletePost = (req, res) => {
   Post.findByIdAndDelete(req.params.id)
     .then((result) => {
-      res.json({ message: 'deleted post!' });
+      res.json({ message: 'deleted post' });
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -55,7 +55,7 @@ export const updatePost = (req, res) => {
        },
     },
   ).then((result) => {
-    res.send({ message: 'updated post!', response: result });
+    res.send({ message: 'updated post', response: result });
   })
     .catch((error) => {
       res.status(500).json({ error });
