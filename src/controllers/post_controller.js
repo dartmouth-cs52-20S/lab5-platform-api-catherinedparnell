@@ -18,7 +18,7 @@ export const createPost = (req, res) => {
 export const getPosts = (req, res) => {
   Post.find()
     .then((result) => {
-      res.send({ response: result });
+      res.send(result);
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -27,7 +27,7 @@ export const getPosts = (req, res) => {
 export const getPost = (req, res) => {
   Post.findById(req.params.id)
     .then((result) => {
-      res.send({ response: result });
+      res.send(result);
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -43,8 +43,8 @@ export const deletePost = (req, res) => {
     });
 };
 export const updatePost = (req, res) => {
-  Post.update(
-    { _id: req.params.id },
+  Post.findByIdAndUpdate(
+    req.params.id,
     {
       $set:
        {
@@ -54,8 +54,9 @@ export const updatePost = (req, res) => {
          tags: req.body.tags,
        },
     },
+    { new: true },
   ).then((result) => {
-    res.send({ message: 'updated post', response: result });
+    res.send(result);
   })
     .catch((error) => {
       res.status(500).json({ error });
