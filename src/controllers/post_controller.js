@@ -5,7 +5,8 @@ export const createPost = (req, res) => {
     title: req.body.title,
     coverUrl: req.body.coverUrl,
     content: req.body.content,
-    tags: req.body.tags,
+    tags: [...new Set(req.body.tags.split(' '))],
+    summary: req.body.summary,
   });
   post.save()
     .then((result) => {
@@ -51,7 +52,8 @@ export const updatePost = (req, res) => {
          title: req.body.title,
          coverUrl: req.body.coverUrl,
          content: req.body.content,
-         tags: req.body.tags,
+         tags: [...new Set(req.body.tags.split(' '))],
+         summary: req.body.summary,
        },
     },
     { new: true },

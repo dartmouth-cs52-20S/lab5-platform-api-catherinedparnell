@@ -5,7 +5,8 @@ const PostSchema = new Schema({
   title: String,
   coverUrl: String,
   content: String,
-  tags: String,
+  tags: Array,
+  summary: String,
 }, {
   toObject: { virtuals: true },
   toJSON: { virtuals: true },
