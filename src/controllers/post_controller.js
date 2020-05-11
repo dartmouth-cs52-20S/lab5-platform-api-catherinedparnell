@@ -25,6 +25,29 @@ export const getPosts = (req, res) => {
       res.status(500).json({ error });
     });
 };
+
+export const getPostsByTags = (req, res) => {
+  Post.find(
+    { tags: { $in: [req.params.tag] } },
+  )
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+export const getTags = (req, res) => {
+  Post.find({}, { tags: 1, _id: 0 })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 export const getPost = (req, res) => {
   Post.findById(req.params.id)
     .then((result) => {

@@ -18,4 +18,10 @@ router.route('/posts/:id')
   .put(Posts.updatePost)
   .delete(Posts.deletePost);
 
+router.route('/filter')
+  .get(Posts.getTags);
+
+router.route('/filter/:tag')
+  .get(Posts.getPostsByTags);
+
 export default router;
