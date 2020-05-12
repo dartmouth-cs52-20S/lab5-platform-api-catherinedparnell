@@ -17,7 +17,7 @@ export const createPost = (req, res) => {
     });
 };
 export const getPosts = (req, res) => {
-  Post.find()
+  Post.find().sort({ createdAt: -1 })
     .then((result) => {
       res.send(result);
     })
@@ -29,7 +29,7 @@ export const getPosts = (req, res) => {
 export const getPostsByTags = (req, res) => {
   Post.find(
     { tags: { $in: [req.params.tag] } },
-  )
+  ).sort({ amount: -1 })
     .then((result) => {
       res.send(result);
     })
