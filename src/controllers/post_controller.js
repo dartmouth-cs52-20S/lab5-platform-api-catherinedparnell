@@ -29,7 +29,7 @@ export const getPosts = (req, res) => {
 export const getPostsByTags = (req, res) => {
   Post.find(
     { tags: { $in: [req.params.tag] } },
-  ).sort({ amount: -1 })
+  ).sort({ createdAt: -1 })
     .then((result) => {
       res.send(result);
     })
