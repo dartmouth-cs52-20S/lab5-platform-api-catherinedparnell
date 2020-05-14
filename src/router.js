@@ -4,7 +4,7 @@ import * as Posts from './controllers/post_controller';
 
 const router = Router();
 
-router.get('/', (req, res) => {
+router.route('/', (req, res) => {
   res.json({ message: 'welcome to our blog api!' });
 });
 
