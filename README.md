@@ -1,7 +1,8 @@
-# starter express app template
+# lab5-platform-api-catherinedparnell
+## What I did
+I created an API to handle storage of post data for the lab 4 blog. It uses the original fields, title, coverUrl, content, and tags, along with an added summary attribute to be displayed in the rendering of all posts. Along with methods used to CRUD posts to and from the database, I implemented a method to fetch all the tags that exist in the database so that I could use them for filtering posts in a new connected 'filterPosts' component and a method to fetch posts only if they contain that certain tag. Also, when posts are fetched, in both getPosts and getPostsByTag, they are fetched sorted by date descending, meaning that newer posts are presented first. I hope to continue to work on this by adding comments in the next part (I know that it says extra credit for comments now, but I'll have more time to work more on this in a few days *and* I want to be able to implement comments by *user* which I know is the next part of the lab anyway).
+## Extra Credit
+* tags as array
+* filter by tagging (I suppose this is EC for the last lab, except in order to do this I implemented a method in the API to fetch all the tags that exist in the database, and a method to fetch posts only if they contain that certain tag)
+* new summary attribute
 
-* node with babel
-* expressjs
-* airbnb eslint rules
-
-Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
