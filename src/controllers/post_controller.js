@@ -1,5 +1,8 @@
 import Post from '../models/post_model';
 
+// update controller to utilize author
+// any route that is protected by requireAuth will now have a req.user object
+
 export const createPost = (req, res) => {
   const post = new Post({
     title: req.body.title,
@@ -7,6 +10,7 @@ export const createPost = (req, res) => {
     content: req.body.content,
     tags: [...new Set(req.body.tags.split(' '))],
     summary: req.body.summary,
+    author: req.user,
   });
   post.save()
     .then((result) => {
@@ -16,6 +20,7 @@ export const createPost = (req, res) => {
       res.status(500).json({ error });
     });
 };
+
 export const getPosts = (req, res) => {
   Post.find().sort({ createdAt: -1 })
     .then((result) => {
@@ -50,6 +55,7 @@ export const getTags = (req, res) => {
 
 export const getPost = (req, res) => {
   Post.findById(req.params.id)
+    .populate('author', 'authorName username email')
     .then((result) => {
       res.send(result);
     })
@@ -57,6 +63,7 @@ export const getPost = (req, res) => {
       res.status(500).json({ error });
     });
 };
+
 export const deletePost = (req, res) => {
   Post.findByIdAndDelete(req.params.id)
     .then((result) => {
@@ -66,24 +73,26 @@ export const deletePost = (req, res) => {
       res.status(500).json({ error });
     });
 };
+
+// houston we have a problem here
 export const updatePost = (req, res) => {
-  Post.findByIdAndUpdate(
-    req.params.id,
+  Post.findOneAndUpdate(
+    { _id: req.params.id, author: req.user._id },
     {
       $set:
-       {
-         title: req.body.title,
-         coverUrl: req.body.coverUrl,
-         content: req.body.content,
-         tags: [...new Set(req.body.tags.split(' '))],
-         summary: req.body.summary,
-       },
+             {
+               title: req.body.title,
+               coverUrl: req.body.coverUrl,
+               content: req.body.content,
+               tags: [...new Set(req.body.tags.split(' '))],
+               summary: req.body.summary,
+             },
     },
     { new: true },
-  ).then((result) => {
-    res.send(result);
-  })
-    .catch((error) => {
+  ).populate('author')
+    .then((result) => {
+      res.send(result);
+    }).catch((error) => {
       res.status(500).json({ error });
     });
 };
